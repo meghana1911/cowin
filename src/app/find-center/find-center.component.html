@@ -1,0 +1,58 @@
+<mat-tab-group [(selectedIndex)]="tabIndex">
+  <mat-tab label="Pin">
+    <div class="tabContent">
+      <mat-form-field>
+        <mat-label>Pin</mat-label>
+        <input matInput type="text" placeholder="Pin" [(ngModel)]="pin" (change)="pinChange($event)"/>
+      </mat-form-field>
+    </div>
+  </mat-tab>
+  <mat-tab label="District">
+    <div class="tabContent">
+      <mat-label>State</mat-label>
+      <mat-select name="states" [(ngModel)]="state" (selectionChange)="stateChanged()" (change)="stateChanged()">
+        <mat-option *ngFor="let state of states" [value]="state.state_id">{{state.state_name}}</mat-option>
+      </mat-select>
+      <br><br>
+      <mat-label>District</mat-label>
+      <mat-select name="districts" [(ngModel)]="district" (selectionChange)="districtChanged()">
+        <mat-option *ngFor="let district of districts"
+                    [value]="district.district_id">{{district.district_name}}</mat-option>
+      </mat-select>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-label>Date</mat-label>
+<mat-select [(ngModel)]="selectedDate" (selectionChange)="dateChanged()">
+  <mat-option *ngFor="let date of dates" [value]="date">{{date}}</mat-option>
+</mat-select>
+<br><br>
+<div align="center">
+<mat-button-toggle-group [(value)]="vaccineType" #group="matButtonToggleGroup" (valueChange)="vaccineTypeChanged()"
+                         multiple="true" appearance="legacy" name="fontStyle" aria-label="Font Style" >
+  <mat-button-toggle value="COVISHIELD">Covishield</mat-button-toggle>
+  <mat-button-toggle value="COVAXIN">Covaxin</mat-button-toggle>
+  <mat-button-toggle value="SPUTNIK">Sputnik</mat-button-toggle>
+</mat-button-toggle-group>
+</div>
+<br>
+<table class="styled-table">
+  <tr class="styled-table">
+    <th class="result">Hospital</th>
+    <th class="result">Vaccine</th>
+    <th class="result">Dose 1</th>
+    <th class="result">Dose 2</th>
+    <th class="result">Fee</th>
+  </tr>
+  <br>
+  <tr *ngFor="let match of filteredMatches" class="styled-table">
+
+    <td class="result" style="max-width: 250px"><span
+      style="font-weight: bold">{{match.name}}</span><br>{{match.address}}</td>
+    <td class="result">{{match.vaccine}}</td>
+    <td class="result" style="text-align: center">{{match.available_capacity_dose1}}</td>
+    <td class="result" style="text-align: center">{{match.available_capacity_dose2}}</td>
+    <td class="result" style="text-align: center">{{match.fee}}</td>
+  </tr>
+</table>
